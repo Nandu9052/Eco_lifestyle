@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: eco-lifestyle-agent
+    env: docker
+    region: oregon
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: ECO_ADMIN_KEY
+        value: Nandu123
+      - key: IBM_GRANITE_API_KEY
+        sync: false
+      - key: IBM_GRANITE_PROJECT_ID
+        sync: false
+      - key: IBM_GRANITE_API_URL
+        value: https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29
+      - key: IBM_GRANITE_MODEL_ID
+        value: ibm/granite-3-8b-instruct

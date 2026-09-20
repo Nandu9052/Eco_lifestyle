@@ -12,8 +12,22 @@ from typing import Any
 import chromadb
 from chromadb.config import Settings
 
+def _resolve_kb_dir() -> Path:
+    candidates = [
+        Path(__file__).resolve().parent.parent.parent.parent / "knowledge_base",
+        Path(__file__).resolve().parent.parent.parent / "knowledge_base",
+        Path("knowledge_base").resolve(),
+        Path("/app/knowledge_base"),
+    ]
+    for c in candidates:
+        if c.exists() and any(c.glob("**/*.md")):
+            return c
+    return candidates[0]
+
+
 DEFAULT_PERSIST_DIR = Path(__file__).resolve().parent.parent.parent / "data" / "chroma_db"
-DEFAULT_KB_DIR = Path(__file__).resolve().parent.parent.parent.parent / "knowledge_base"
+DEFAULT_KB_DIR = _resolve_kb_dir()
+
 
 
 def compute_source_priority(source_url: str = "", organization: str = "", location: str = "") -> int:

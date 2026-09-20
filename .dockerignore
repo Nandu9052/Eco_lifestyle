@@ -1,0 +1,16 @@
+node_modules
+frontend/node_modules
+backend/.venv
+.venv
+venv
+__pycache__
+*.pyc
+.git
+.gitignore
+.env
+backend/.env
+frontend/.env
+data/chroma_db
+backend/data/chroma_db
+.pytest_cache
+backend/.pytest_cache

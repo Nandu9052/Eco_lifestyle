@@ -1,7 +1,10 @@
+from pathlib import Path
 from typing import Any
 
 from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.ai.service import get_ai_service
 from app.config import settings
@@ -306,6 +309,40 @@ def travel() -> dict[str, Any]:
     }
 
 
-@app.get('/')
-def root() -> dict[str, str]:
-    return {'message': 'Eco Lifestyle Agent backend is running.'}
+# Production SPA & Static Assets Serving for unified Render / Docker deployment
+def _resolve_frontend_dist() -> Path | None:
+    candidates = [
+        Path(__file__).resolve().parent.parent.parent / "frontend" / "dist",
+        Path("/app/frontend/dist"),
+        Path("frontend/dist").resolve(),
+    ]
+    for c in candidates:
+        if c.exists() and (c / "index.html").exists():
+            return c
+    return None
+
+
+frontend_dist = _resolve_frontend_dist()
+if frontend_dist:
+    assets_dir = frontend_dist / "assets"
+    if assets_dir.exists():
+        app.mount("/assets", StaticFiles(directory=str(assets_dir)), name="assets")
+
+    @app.get("/")
+    async def serve_root():
+        return FileResponse(str(frontend_dist / "index.html"))
+
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        if full_path.startswith("api/") or full_path.startswith("docs") or full_path.startswith("openapi.json"):
+            raise HTTPException(status_code=404, detail="API route not found.")
+        file_path = frontend_dist / full_path
+        if full_path and file_path.exists() and file_path.is_file():
+            return FileResponse(str(file_path))
+        return FileResponse(str(frontend_dist / "index.html"))
+else:
+    @app.get('/')
+    def root() -> dict[str, str]:
+        return {'message': 'Eco Lifestyle Agent backend is running.'}
+
+
