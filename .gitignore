@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+backend/.venv/
+.venv/
+venv/
+
+# Python cache & build artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+.pytest_cache/
+backend/.pytest_cache/
+.cache/
+
+# Build outputs
+dist/
+frontend/dist/
+build/
+.vite/
+coverage/
+
+# Environment and secrets (CRITICAL: NEVER COMMIT SECRETS)
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+credentials/
+secrets/
+*.pem
+*.key
+
+# Local Vector Store (auto-generated on startup from knowledge_base or via ingest.py)
+data/chroma_db/
+backend/data/chroma_db/
+
+# System and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+

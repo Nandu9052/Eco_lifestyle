@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --color-eco-50: #f0fdf4;
+  --color-eco-100: #dcfce7;
+  --color-eco-200: #bbf7d0;
+  --color-eco-300: #86efac;
+  --color-eco-400: #4ade80;
+  --color-eco-500: #22c55e;
+  --color-eco-600: #16a34a;
+  --color-eco-700: #15803d;
+  --color-eco-800: #166534;
+  --color-eco-900: #14532d;
+
+  --color-surface-50: #0f1e22;
+  --color-surface-100: #0a1a1e;
+  --color-surface-200: #081519;
+  --color-surface-300: #060f12;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: linear-gradient(135deg, #060f12 0%, #0c1f23 50%, #080d10 100%);
+  color: #e8f4f0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #081519;
+}
+::-webkit-scrollbar-thumb {
+  background: #22c55e40;
+  border-radius: 3px;
+}
+
+/* Prose style for answer text */
+.answer-prose p {
+  margin-bottom: 0.75rem;
+  line-height: 1.7;
+}
+.answer-prose ul, .answer-prose ol {
+  padding-left: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.answer-prose li {
+  margin-bottom: 0.3rem;
+  line-height: 1.6;
+}
