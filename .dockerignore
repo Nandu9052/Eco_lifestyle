@@ -7,10 +7,10 @@ __pycache__
 *.pyc
 .git
 .gitignore
+# Secrets & Cache
 .env
 backend/.env
 frontend/.env
-data/chroma_db
-backend/data/chroma_db
 .pytest_cache
 backend/.pytest_cache
+

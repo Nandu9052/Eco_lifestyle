@@ -36,8 +36,14 @@ RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
 COPY backend/ ./backend/
 COPY knowledge_base/ ./knowledge_base/
 
+# Pre-cache ONNX model and build ChromaDB during Docker build phase
+# (Docker build has high memory limits, preventing runtime OOM on Render 512MB free tier)
+RUN python -c "import chromadb; from chromadb.utils import embedding_functions; fn = embedding_functions.DefaultEmbeddingFunction(); fn(['warmup'])" && \
+    python -c "import sys; sys.path.insert(0, 'backend'); from app.rag.vector_store import VectorStore; vs = VectorStore(persist_directory='backend/data/chroma_db'); vs.ingest(kb_dir='knowledge_base')"
+
 # Copy compiled frontend dist from builder stage
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
+
 
 # Expose default port
 EXPOSE 8000

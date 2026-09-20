@@ -35,9 +35,8 @@ secrets/
 *.pem
 *.key
 
-# Local Vector Store (auto-generated on startup from knowledge_base or via ingest.py)
+# Local Vector Store (committed for instant 0-second cloud startup)
 data/chroma_db/
-backend/data/chroma_db/
 
 # System and editor files
 .DS_Store

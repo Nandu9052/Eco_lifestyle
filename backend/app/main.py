@@ -48,16 +48,15 @@ def verify_admin(
 
 
 @app.on_event("startup")
-def on_startup():
-    """Ensure ChromaDB knowledge base is populated on startup."""
+async def on_startup():
+    """Verify ChromaDB knowledge base on startup without blocking port binding."""
     try:
         col = retriever.vector_store.collection
-        if col.count() == 0:
-            print("[INFO] ChromaDB is empty on startup. Auto-ingesting knowledge base...")
-            retriever.vector_store.ingest()
-            print("[INFO] Knowledge base auto-ingestion completed.")
+        count = col.count()
+        print(f"[INFO] ChromaDB ready with {count} vector chunks. Port binding active.")
     except Exception as exc:
         print(f"[WARNING] Startup knowledge base check: {exc}")
+
 
 
 @app.get('/api/health')
