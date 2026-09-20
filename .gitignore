@@ -14,11 +14,10 @@ __pycache__/
 backend/.pytest_cache/
 .cache/
 
-# Build outputs
-dist/
-frontend/dist/
+# Build outputs (allow frontend/dist for single-service cloud deployments)
 build/
 .vite/
+coverage/
 coverage/
 
 # Environment and secrets (CRITICAL: NEVER COMMIT SECRETS)
